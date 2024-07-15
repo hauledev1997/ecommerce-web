@@ -22,10 +22,14 @@ mongoose.set('useCreateIndex', true);
 const urlConnect = process.env.DB;
 
 // Connect to database
-mongoose.connect(urlConnect, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
-  if (err) throw err;
-  console.log('Connect successfullyy!!');
-});
+mongoose.connect(
+  urlConnect,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  err => {
+    if (err) throw err;
+    console.log('Connect successfullyy!!');
+  }
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,7 +46,7 @@ app.use(
     saveUninitialized: true,
     resave: false,
     store: new MongoDBStore({ uri: process.env.DB, collection: 'sessions' }),
-    cookie: { maxAge: 180 * 60 * 1000 }
+    cookie: { maxAge: 180 * 60 * 1000 },
   })
 );
 
@@ -62,12 +66,12 @@ app.use(authRouter);
 require('./config/passport')(passport);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   var cartProduct;
   if (!req.session.cart) {
     cartProduct = null;
